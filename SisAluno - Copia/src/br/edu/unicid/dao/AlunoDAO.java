@@ -106,6 +106,7 @@ public class AlunoDAO {
 				throw new Exception(sqle);
 		 } finally {
 			ConnectionFactory.closeConnection(conn, ps, rs);
-	     }
+	     
+		 }
      }
 }
