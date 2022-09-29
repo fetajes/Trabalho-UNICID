@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.unicid.bean.Aluno;
 import br.edu.unicid.util.ConnectionFactory;
@@ -108,5 +110,29 @@ public class AlunoDAO {
 			ConnectionFactory.closeConnection(conn, ps, rs);
 	     
 		 }
+     }
+		
+	 // Listar todos os alunos
+public List todosAlunos() throws Exception {
+			
+			try {
+				conn = this.conn;
+				ps = conn.prepareStatement("SELECT * FROM tb_aluno");
+				rs = ps.executeQuery();
+				List<Aluno> list = new ArrayList<Aluno>();
+				while (rs.next()) {
+					int ca = rs.getInt(1);
+					String nome = rs.getString(2);
+					String email = rs.getString(3);
+					Date nascimento = rs.getDate(4);
+					String endereco = rs.getString(5);
+					list.add(new Aluno (ca, nome, email, nascimento, endereco));
+				}
+				return list;
+			} catch (SQLException sqle) {
+				throw new Exception(sqle);
+		 } finally {
+			ConnectionFactory.closeConnection(conn, ps, rs);
+	     }
      }
 }
